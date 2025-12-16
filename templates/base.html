@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Notes{% endblock %}</title>
+</head>
+<body>
+
+<nav>
+    {% if session.get('username') %}
+        Вы вошли как <b>{{ session.username }}</b> |
+        <a href="{{ url_for('logout') }}">Выйти</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Войти</a> |
+        <a href="{{ url_for('register') }}">Регистрация</a>
+    {% endif %}
+</nav>
+
+<hr>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+      {% for category, message in messages %}
+        <li><b>{{ category }}:</b> {{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{% block content %}{% endblock %}
+
+</body>
+</html>

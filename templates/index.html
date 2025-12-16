@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Заметки{% endblock %}
+
+{% block content %}
+<h1>Список заметок</h1>
+
+{% if session.username %}
+    <p>Вошли как <b>{{ session.username }}</b></p>
+{% endif %}
+
+<h2>Добавить заметку</h2>
+
+{% if session.user_id %}
+<form method="post" action="{{ url_for('create_note') }}">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.title.label }}<br>
+        {{ form.title(size=60) }}
+    </div>
+    <div>
+        {{ form.content.label }}<br>
+        {{ form.content(rows=6, cols=60) }}
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
+</form>
+{% else %}
+<p><em>Для добавления заметок выполните вход</em></p>
+{% endif %}
+
+<hr>
+
+<ul>
+{% for note in notes %}
+    <li>
+        <h3>{{ note.title|e }} <small>(id={{ note.id }})</small></h3>
+        <p>{{ note.content|e }}</p>
+        <p>created: {{ note.created_at }}</p>
+
+        {% if session.user_id and session.user_id == note.owner_id %}
+            <a href="{{ url_for('create_note', note_id=note.id) }}">Редактировать</a>
+            <form method="post"
+                  action="{{ url_for('delete_note', note_id=note.id) }}"
+                  style="display:inline">
+                {{ form.hidden_tag() }}
+                <button type="submit">Удалить</button>
+            </form>
+        {% else %}
+            <em>Не ваше</em>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

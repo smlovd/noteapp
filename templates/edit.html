@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Редактировать заметку{% endblock %}
+
+{% block content %}
+<h1>Редактирование заметки</h1>
+
+<form method="post">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.title.label }}<br>
+        {{ form.title(value=note.title, size=60) }}
+    </div>
+    <div>
+        {{ form.content.label }}<br>
+        {{ form.content(value=note.content, rows=6, cols=60) }}
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
+</form>
+
+<p><a href="{{ url_for('index') }}">Назад</a></p>
+{% endblock %}
