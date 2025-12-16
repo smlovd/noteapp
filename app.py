@@ -157,4 +157,5 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    print("Flask приложение запущено на 0.0.0.0:5000")
+    serve(app, host='0.0.0.0', port=5000)
