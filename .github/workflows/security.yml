@@ -26,4 +26,4 @@ jobs:
         run: |
           bandit -r . -lll -iii -f json -o bandit.json # запуск Bandit, JSON в bandit.json
           python -c "import json,sys; d=json.load(open('bandit.json')); high=int(d.get('metrics',{}).get('_totals',{}).get('SEVERITY.HIGH',0)); print(f'SEVERITY.HIGH={high}'); sys.exit(1 if high>0 else 0)"
-          # проверка JSON: если есть хотя бы одна критическая уязвимость - падение
+          # проверка JSON: если есть хотя бы одна критическая уязвимость - падениеt
